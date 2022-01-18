@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Built-By: Minu
+Build-Jdk: 17.0.1
+Implementation-Title: oracle-code-challenge
+Implementation-Version: 1
+Implementation-Vendor-Id: com.oracle.task
+Created-By: Maven Integration for Eclipse
+
