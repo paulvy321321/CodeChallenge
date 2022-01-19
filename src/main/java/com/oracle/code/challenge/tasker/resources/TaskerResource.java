@@ -7,6 +7,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import com.codahale.metrics.annotation.Timed;
 import com.oracle.code.challenge.tasker.core.TaskerEntity;
@@ -27,11 +28,10 @@ public class TaskerResource {
 	@GET
 	@Path("/tasks")
 	@UnitOfWork
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<TaskerEntity> getAllTasks() {
+	public Response getAllTasks() {
 
 		List<TaskerEntity> listss = peopleDAO.findAll();
-		return listss;
+		return Response.ok(listss).build();
 
 	}
 
@@ -40,6 +40,7 @@ public class TaskerResource {
 	@Timed
 	@UnitOfWork
 	public TaskerEntity findPerson(@PathParam("id") Long id) {
+		//return Response.ok(res).build();
 		return peopleDAO.findById(id);
 	}
 
@@ -48,6 +49,7 @@ public class TaskerResource {
 	@Timed
 	@UnitOfWork
 	public Long savePerson(TaskerEntity request) {
+		//return Response.ok(res).build();
 		return peopleDAO.create(request);
 	}
 }

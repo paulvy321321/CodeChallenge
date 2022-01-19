@@ -30,7 +30,7 @@
               <transformers>
                 <transformer />
                 <transformer>
-                  <mainClass>com.oracle.code.challenge.tasks.App</mainClass>
+                  <mainClass>com.oracle.code.challenge.tasker.TaskerApplication</mainClass>
                 </transformer>
               </transformers>
             </configuration>

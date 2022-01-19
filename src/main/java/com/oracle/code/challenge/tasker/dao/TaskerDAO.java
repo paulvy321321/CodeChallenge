@@ -18,8 +18,9 @@ public class TaskerDAO extends AbstractDAO<TaskerEntity> {
 		return persist(person).getId();
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<TaskerEntity> findAll() {
-		return list(namedTypedQuery("com.oracle.code.challenge.tasker.OracleTasksModel.findAll"));
+		return list(currentSession().createQuery("from TaskerEntity"));
 	}
 
 	public TaskerEntity findById(Long id) {
