@@ -19,4 +19,3 @@ database:
         hibernate.generate_statistics: true
         hibernate.show_sql: true
         hibernate.format_sql: true
-        

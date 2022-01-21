@@ -1,37 +1,55 @@
 package com.oracle.code.challenge.tasker.resources;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+
+import org.apache.commons.lang3.StringUtils;
 
 import com.codahale.metrics.annotation.Timed;
 import com.oracle.code.challenge.tasker.core.TaskerEntity;
+import com.oracle.code.challenge.tasker.core.TaskerResponse;
 import com.oracle.code.challenge.tasker.dao.TaskerDAO;
 
 import io.dropwizard.hibernate.UnitOfWork;
+import lombok.extern.slf4j.Slf4j;
 
-@Path("/hello-world")
+@Path("/tasks")
 @Produces(MediaType.APPLICATION_JSON)
+@Slf4j
 public class TaskerResource {
 
-	private final TaskerDAO peopleDAO;
+	private final TaskerDAO taskerDAO;
 
 	public TaskerResource(TaskerDAO peopleDAO) {
-		this.peopleDAO = peopleDAO;
+		this.taskerDAO = peopleDAO;
 	}
 
 	@GET
-	@Path("/tasks")
+	@Path("/all")
 	@UnitOfWork
-	public Response getAllTasks() {
+	public Response fetchAllTasks() {
+		log.info("Resorce method fetchAllTasks has invoked");
+		try {
+			List<TaskerResponse> tasksList = taskerDAO.findAll();
+			if (!tasksList.isEmpty()) {
+				return Response.ok(tasksList).build();
+			} else
+				throw new WebApplicationException("No Tasks Found", Status.NO_CONTENT);
 
-		List<TaskerEntity> listss = peopleDAO.findAll();
-		return Response.ok(listss).build();
+		} catch (Exception e) {
+			log.error("Exception occured while fetching ALL Tasks due to {}", e.getMessage());
+			throw new WebApplicationException(e.getMessage(), Status.INTERNAL_SERVER_ERROR);
+		}
 
 	}
 
@@ -39,17 +57,37 @@ public class TaskerResource {
 	@Path("/{id}")
 	@Timed
 	@UnitOfWork
-	public TaskerEntity findPerson(@PathParam("id") Long id) {
-		//return Response.ok(res).build();
-		return peopleDAO.findById(id);
+	public Response fetchTask(@PathParam("id") Long id) {
+		log.info("Resource method fetchTask has invoked id=" + id);
+		try {
+			TaskerResponse response = taskerDAO.findById(id);
+			if (Objects.nonNull(response)) {
+				return Response.ok(response).build();
+
+			} else
+				throw new WebApplicationException("No Task Found", Status.NO_CONTENT);
+		} catch (Exception e) {
+			log.error("Exception occured while fetch TASK due to {}", e.getMessage());
+			throw new WebApplicationException(e.getMessage(), Status.INTERNAL_SERVER_ERROR);
+		}
 	}
 
-	@GET
+	@POST
 	@Path("/save")
 	@Timed
 	@UnitOfWork
-	public Long savePerson(TaskerEntity request) {
-		//return Response.ok(res).build();
-		return peopleDAO.create(request);
+	public Response saveTasks(TaskerEntity request) {
+		log.info("Resource method saveTasks has invoked id= {},desc={}" + request.getId(), request.getDescription());
+		try {
+			String reqStatus = taskerDAO.create(request);
+			if (StringUtils.isNoneBlank(reqStatus) && StringUtils.equalsIgnoreCase(reqStatus, "SUCCESS")) {
+				return Response.ok(reqStatus).build();
+			} else
+				log.error("FAILED to save task desc:{} ,date:{}", request.getDescription(), request.getDate());
+			return Response.ok(reqStatus).build();
+		} catch (Exception e) {
+			log.error("Exception occured while saving Tasks due to {}", e.getMessage());
+			throw new WebApplicationException(e.getMessage(), Status.INTERNAL_SERVER_ERROR);
+		}
 	}
 }

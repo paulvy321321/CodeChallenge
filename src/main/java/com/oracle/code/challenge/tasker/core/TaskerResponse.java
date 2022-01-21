@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class TaskerResponse {
 
-	public String id;
+	public Long id;
 	public String description;
 	public String date;
 }

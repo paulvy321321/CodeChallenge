@@ -23,11 +23,12 @@ public class TaskerEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "TASK_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private String date;
 
 	private String description;
+	
+	private Boolean complete;
 }
