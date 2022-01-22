@@ -2,7 +2,6 @@ package com.oracle.code.challenge.tasker.core;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,6 +28,6 @@ public class TaskerEntity implements Serializable {
 	private String date;
 
 	private String description;
-	
+
 	private Boolean complete;
 }

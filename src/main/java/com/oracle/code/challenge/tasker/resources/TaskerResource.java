@@ -79,11 +79,30 @@ public class TaskerResource {
 	public Response saveTasks(TaskerEntity request) {
 		log.info("Resource method saveTasks has invoked id= {},desc={}" + request.getId(), request.getDescription());
 		try {
-			String reqStatus = taskerDAO.create(request);
+			String reqStatus = taskerDAO.saveTask(request);
 			if (StringUtils.isNoneBlank(reqStatus) && StringUtils.equalsIgnoreCase(reqStatus, "SUCCESS")) {
 				return Response.ok(reqStatus).build();
 			} else
 				log.error("FAILED to save task desc:{} ,date:{}", request.getDescription(), request.getDate());
+			return Response.ok(reqStatus).build();
+		} catch (Exception e) {
+			log.error("Exception occured while saving Tasks due to {}", e.getMessage());
+			throw new WebApplicationException(e.getMessage(), Status.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@POST
+	@Path("/update")
+	@Timed
+	@UnitOfWork
+	public Response updateTasks(TaskerEntity request) {
+		log.info("Resource method updateTasks has invoked id= {},status={}" + request.getId(), request.getComplete());
+		try {
+			String reqStatus = taskerDAO.updateStatus(request);
+			if (StringUtils.isNoneBlank(reqStatus) && StringUtils.equalsIgnoreCase(reqStatus, "SUCCESS")) {
+				return Response.ok(reqStatus).build();
+			} else
+				log.error("FAILED to update task status:{} ,id:{}", request.getComplete(), request.getId());
 			return Response.ok(reqStatus).build();
 		} catch (Exception e) {
 			log.error("Exception occured while saving Tasks due to {}", e.getMessage());

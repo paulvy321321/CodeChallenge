@@ -8,4 +8,5 @@ public class TaskerResponse {
 	public Long id;
 	public String description;
 	public String date;
+	public Boolean completed;
 }
