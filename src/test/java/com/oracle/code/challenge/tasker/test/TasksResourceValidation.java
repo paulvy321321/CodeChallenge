@@ -12,8 +12,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import com.oracle.code.challenge.tasker.core.TaskerEntity;
 import com.oracle.code.challenge.tasker.core.TaskerResponse;
+import com.oracle.code.challenge.tasker.core.db.TaskerEntity;
 import com.oracle.code.challenge.tasker.dao.TaskerDAO;
 import com.oracle.code.challenge.tasker.resources.TaskerResource;
 

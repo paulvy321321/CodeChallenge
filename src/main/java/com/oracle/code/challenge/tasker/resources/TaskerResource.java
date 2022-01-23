@@ -3,6 +3,7 @@ package com.oracle.code.challenge.tasker.resources;
 import java.util.List;
 import java.util.Objects;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -13,11 +14,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import org.apache.commons.lang3.StringUtils;
-
 import com.codahale.metrics.annotation.Timed;
-import com.oracle.code.challenge.tasker.core.TaskerEntity;
+
 import com.oracle.code.challenge.tasker.core.TaskerResponse;
+import com.oracle.code.challenge.tasker.core.db.TaskerEntity;
 import com.oracle.code.challenge.tasker.dao.TaskerDAO;
 
 import io.dropwizard.hibernate.UnitOfWork;
@@ -25,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Path("/tasks")
 @Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 @Slf4j
 public class TaskerResource {
 
@@ -41,7 +42,7 @@ public class TaskerResource {
 		log.info("Resorce method fetchAllTasks has invoked");
 		try {
 			List<TaskerResponse> tasksList = taskerDAO.findAll();
-			if (!tasksList.isEmpty()) {
+			if (Objects.nonNull(tasksList)&&!tasksList.isEmpty()) {
 				return Response.ok(tasksList).build();
 			} else
 				throw new WebApplicationException("No Tasks Found", Status.NO_CONTENT);
@@ -79,8 +80,8 @@ public class TaskerResource {
 	public Response saveTasks(TaskerEntity request) {
 		log.info("Resource method saveTasks has invoked id= {},desc={}" + request.getId(), request.getDescription());
 		try {
-			String reqStatus = taskerDAO.saveTask(request);
-			if (StringUtils.isNoneBlank(reqStatus) && StringUtils.equalsIgnoreCase(reqStatus, "SUCCESS")) {
+			TaskerResponse reqStatus = taskerDAO.saveTask(request);
+			if (Objects.nonNull(reqStatus)) {
 				return Response.ok(reqStatus).build();
 			} else
 				log.error("FAILED to save task desc:{} ,date:{}", request.getDescription(), request.getDate());
@@ -98,8 +99,8 @@ public class TaskerResource {
 	public Response updateTasks(TaskerEntity request) {
 		log.info("Resource method updateTasks has invoked id= {},status={}" + request.getId(), request.getComplete());
 		try {
-			String reqStatus = taskerDAO.updateStatus(request);
-			if (StringUtils.isNoneBlank(reqStatus) && StringUtils.equalsIgnoreCase(reqStatus, "SUCCESS")) {
+			TaskerResponse reqStatus = taskerDAO.updateStatus(request);
+			if (Objects.nonNull(reqStatus)) {
 				return Response.ok(reqStatus).build();
 			} else
 				log.error("FAILED to update task status:{} ,id:{}", request.getComplete(), request.getId());
@@ -109,4 +110,5 @@ public class TaskerResource {
 			throw new WebApplicationException(e.getMessage(), Status.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
 }

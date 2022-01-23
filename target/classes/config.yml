@@ -17,6 +17,5 @@ database:
         hibernate.dialect: org.hibernate.dialect.MySQL5Dialect
         hibernate.hbm2ddl.auto: create
         hibernate.generate_statistics: true
-        hibernate.show_sql: true
+        hibernate.show_sql: false
         hibernate.format_sql: true
-        

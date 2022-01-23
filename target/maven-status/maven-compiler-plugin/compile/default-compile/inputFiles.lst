@@ -1,7 +1,7 @@
-C:\Users\paulv\task-code-challenge\src\main\java\com\oracle\code\challenge\tasks\resources\HelloWorldResource.java
-C:\Users\paulv\task-code-challenge\src\main\java\com\oracle\code\challenge\tasks\core\ResponseTasks.java
-C:\Users\paulv\task-code-challenge\src\main\java\com\oracle\code\challenge\tasks\dao\OracleTasksDAO.java
-C:\Users\paulv\task-code-challenge\src\main\java\com\oracle\code\challenge\tasks\HelloWorldConfiguration.java
-C:\Users\paulv\task-code-challenge\src\main\java\com\oracle\code\challenge\tasks\core\OracleTasksModel.java
-C:\Users\paulv\task-code-challenge\src\main\java\com\oracle\code\challenge\tasks\App.java
-C:\Users\paulv\task-code-challenge\src\main\java\com\oracle\code\challenge\tasks\core\RequestTasks.java
+C:\Users\paulv\task-code-challenge\src\main\java\com\oracle\code\challenge\tasker\core\TaskerResponse.java
+C:\Users\paulv\task-code-challenge\src\main\java\com\oracle\code\challenge\tasker\resources\TaskerResource.java
+C:\Users\paulv\task-code-challenge\src\main\java\com\oracle\code\challenge\tasker\core\db\TaskerEntity.java
+C:\Users\paulv\task-code-challenge\src\main\java\com\oracle\code\challenge\tasker\core\TaskerRequest.java
+C:\Users\paulv\task-code-challenge\src\main\java\com\oracle\code\challenge\tasker\dao\TaskerDAO.java
+C:\Users\paulv\task-code-challenge\src\main\java\com\oracle\code\challenge\tasker\TaskerApplication.java
+C:\Users\paulv\task-code-challenge\src\main\java\com\oracle\code\challenge\tasker\TaskerConfiguration.java

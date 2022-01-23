@@ -1,6 +1,7 @@
 package com.oracle.code.challenge.tasker;
 
-import com.oracle.code.challenge.tasker.core.TaskerEntity;
+
+import com.oracle.code.challenge.tasker.core.db.TaskerEntity;
 import com.oracle.code.challenge.tasker.dao.TaskerDAO;
 import com.oracle.code.challenge.tasker.resources.TaskerResource;
 
